@@ -19,7 +19,7 @@ from sqlalchemy.orm import exc
 
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
-from pypnusershub.db import models
+from pypnusershub.db import models, db
 from pypnusershub.db.tools import (
     user_from_token, UnreadableAccessRightsError,
     AccessRightsExpiredError
@@ -53,6 +53,10 @@ from pypnusershub.db.tools import (
 class ConfigurableBlueprint(Blueprint):
 
     def register(self, app, options, first_registration=False):
+
+        # make sure the db session will be refreshed regularly
+        if first_registration:
+            db.init_app(app)
 
         # set cookie autorenew
         expiration = app.config.get('COOKIE_EXPIRATION', 3600)

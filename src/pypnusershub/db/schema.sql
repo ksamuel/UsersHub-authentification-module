@@ -1,24 +1,48 @@
 CREATE SCHEMA IF NOT EXISTS utilisateurs;
 
-CREATE SEQUENCE IF NOT EXISTS utilisateurs.bib_organismes_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+DO
+$$
+BEGIN
+  CREATE SEQUENCE utilisateurs.bib_organismes_id_seq
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+EXCEPTION WHEN duplicate_table THEN
+        -- do nothing, it's already there
+END
+$$;
 
-CREATE SEQUENCE IF NOT EXISTS utilisateurs.bib_unites_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-CREATE SEQUENCE IF NOT EXISTS utilisateurs.t_applications_id_application_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+
+DO
+$$
+BEGIN
+  CREATE SEQUENCE utilisateurs.bib_unites_id_seq
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+EXCEPTION WHEN duplicate_table THEN
+        -- do nothing, it's already there
+END
+$$;
+
+DO
+$$
+BEGIN
+  CREATE SEQUENCE utilisateurs.t_applications_id_application_seq
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+EXCEPTION WHEN duplicate_table THEN
+        -- do nothing, it's already there
+END
+$$;
+
 
 CREATE TABLE IF NOT EXISTS utilisateurs.bib_droits
 (
@@ -28,19 +52,36 @@ CREATE TABLE IF NOT EXISTS utilisateurs.bib_droits
   CONSTRAINT bib_droits_pkey PRIMARY KEY (id_droit)
 );
 
-CREATE SEQUENCE IF NOT EXISTS utilisateurs.t_menus_id_menu_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+DO
+$$
+BEGIN
+  CREATE SEQUENCE utilisateurs.t_menus_id_menu_seq
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+EXCEPTION WHEN duplicate_table THEN
+        -- do nothing, it's already there
+END
+$$;
 
-CREATE SEQUENCE IF NOT EXISTS utilisateurs.t_roles_id_seq
+
+DO
+$$
+BEGIN
+
+CREATE SEQUENCE utilisateurs.t_roles_id_seq
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
-  START 1
+  START 15 -- this should start after the last id from the fixtures
   CACHE 1;
+EXCEPTION WHEN duplicate_table THEN
+        -- do nothing, it's already there
+END
+$$;
+
 
 CREATE TABLE IF NOT EXISTS utilisateurs.bib_organismes
 (
